@@ -1,4 +1,8 @@
-const MemoryGame = ({ images }) => {
+interface Props {
+  images: string[];
+}
+
+const MemoryGame = ({ images }: Props) => {
   return (
     <div>
       <h1>Memory Game</h1>
