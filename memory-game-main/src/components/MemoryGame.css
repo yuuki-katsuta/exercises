@@ -1,0 +1,17 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  gap: 4px;
+}
+
+.card {
+  height: 300px;
+  width: 300px;
+  padding: 10px;
+}
+
+.placeHolder {
+  background-color: grey;
+}
