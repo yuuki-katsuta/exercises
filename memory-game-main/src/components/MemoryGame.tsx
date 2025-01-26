@@ -13,12 +13,13 @@ const MemoryGame = ({ images }: Props) => {
   });
   const [flippedIdx, setFlippedIdx] = useState<number>(NaN);
   const [founded, setFounded] = useState<{ [select: number]: boolean }>({});
-  const isComplete = Object.values(founded).length === cards.length;
 
-  const handleReset = () => {
-    setCards(shuffle([...images, ...images]));
-    setFlippedIdx(NaN);
-    setFounded({});
+  const isCompleted = Object.values(founded).length === cards.length;
+
+  const isVisible = (idx: number) => {
+    const isSelected = idx === flippedIdx;
+    const isMatched = founded[idx];
+    return isSelected || isMatched;
   };
 
   const handleSelect = (idx: number) => {
@@ -29,29 +30,24 @@ const MemoryGame = ({ images }: Props) => {
     setFlippedIdx(idx);
   };
 
-  const isVisible = (idx: number) => {
-    if (idx === flippedIdx) {
-      return true;
-    }
-    if (founded[idx]) {
-      return true;
-    }
-
-    return false;
+  const handleReset = () => {
+    setCards(shuffle([...images, ...images]));
+    setFlippedIdx(NaN);
+    setFounded({});
   };
 
   return (
     <div>
       <h1>Memory Game</h1>
-      {isComplete && (
+      {isCompleted && (
         <>
           <p>congratulations!!</p>
           <button onClick={handleReset}>reset</button>
         </>
       )}
       <div className="board">
-        {cards.map((image, idx) => {
-          return isVisible(idx) ? (
+        {cards.map((image, idx) =>
+          isVisible(idx) ? (
             <img key={idx} src={image} className="card" />
           ) : (
             <div
@@ -59,8 +55,8 @@ const MemoryGame = ({ images }: Props) => {
               onClick={() => handleSelect(idx)}
               className="card placeHolder"
             />
-          );
-        })}
+          )
+        )}
       </div>
     </div>
   );
