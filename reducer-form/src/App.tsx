@@ -8,7 +8,7 @@ import { CheckboxField } from "./components/form/fields/CheckboxField";
 import { FormValues } from "./components/form/FormSchema";
 
 const FormContent = () => {
-  const { state, handleSubmit } = useForm();
+  const { state, handleSubmit, handleSetValue, handleBlur } = useForm();
 
   const onSubmit = useCallback(async (values: FormValues) => {
     console.log("送信データ:", values);
@@ -27,14 +27,19 @@ const FormContent = () => {
         <TextField
           name="personal.firstName"
           label="名前"
-          required
-          maxLength={20}
           placeholder="例：太郎"
+          value={state.values.personal.firstName}
+          onChange={(e) => handleSetValue("personal.firstName", e.target.value)}
+          onBlur={() => handleBlur("personal.firstName")}
+          error={state.errors["personal.firstName"]}
+          maxLength={20}
+          required
         />
 
         <TextField
           name="personal.lastName"
           label="姓"
+          value={state.values.personal.lastName}
           required
           maxLength={20}
           placeholder="例：山田"
@@ -47,6 +52,7 @@ const FormContent = () => {
         <TextField
           name="contact.email"
           label="メールアドレス"
+          value={state.values.contact.email}
           required
           placeholder="例：example@example.com"
         />
@@ -54,11 +60,18 @@ const FormContent = () => {
         <TextField
           name="contact.phone"
           label="電話番号"
+          value={state.values.contact.phone}
           placeholder="例：090-1234-5678"
         />
       </fieldset>
 
-      <TextField name="age" label="年齢" required placeholder="例：25" />
+      <TextField
+        name="age"
+        label="年齢"
+        value={state.values.age}
+        required
+        placeholder="例：25"
+      />
 
       <fieldset>
         <legend>通知設定</legend>

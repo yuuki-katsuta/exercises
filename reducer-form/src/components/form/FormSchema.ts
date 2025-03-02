@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const formSchema = z.object({
   personal: z.object({
-    firstName: z.string().min(1, "名前を入力してください"),
+    firstName: z.string().min(3, "名前を入力してください"),
     lastName: z.string().min(1, "姓を入力してください"),
   }),
   contact: z.object({
